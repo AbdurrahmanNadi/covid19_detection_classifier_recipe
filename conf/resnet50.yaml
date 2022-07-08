@@ -1,0 +1,26 @@
+model:
+  type: pretrained
+  conf: 
+    model_type: resnet50
+    n_cls: 2
+
+dataset:
+  img_size: 256
+  crop_size: 224
+  img_affixs: [png,jpg,jpeg]
+  use_CLAHE: True
+  
+trainer:
+  model_affix: resnet50
+  optim_affix: Adam
+  optim: Adam
+  lr: 0.001
+  scheduler: plateau
+  schd_params:
+    factor: 0.1
+  batch_size: 64
+  start_epoch: 0
+  n_epochs: 60
+  n_workers: 8
+  log_interval: 100
+  save_interval: 10
