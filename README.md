@@ -8,6 +8,17 @@ This pytorch recipe aims to train classifiers in pytorch to detect COVID19 from 
 
 The classifier is trained to identify an input x-ray image as COVID19 patient or normal patient.
 
+## Structure
+
+* [Installation](#installation)
+* [Dataset](#dataset)
+  * [Preprocessing](#preprocessing)
+* [Training](#training)
+  * [Model Configuration](#model-configuration)
+* [Evaluation](#evaluation)
+* [Inference](#inference)
+* [Results](#results)
+
 ## Installation
 
 Requirements
@@ -143,7 +154,11 @@ To start an experiment you should start by
 * Write the configuration file and configure the model parameters
 * run trainer.py
 
-All the configuration are specified above except for the model configuration part since it depends on the target model. You can see the model configuration [here](models/README.md).
+All the configuration are specified above except for the model configuration part since it depends on the target model. 
+
+### Model Configuration
+
+You can see the model configuration [here](models/README.md).
 
 ## Evaluation
 
