@@ -1,13 +1,24 @@
 import os
 import glob
 
-import cv2
+from PIL import Image
 import albumentations as A
 import numpy as np
 
 import torch
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
+
+
+def read_image(img_path):
+    img_pil = Image.open(img_path).convert('RGB')
+    img_np = np.array(img_pil)
+    return img_np
+
+
+def write_image(img_path, img_np):
+    img_pil = Image.fromarray(img_np.astype(np.uint8))
+    img_pil.save(img_path)
 
 
 def get_dataloader(dataset, batch_size, shuffle=True, n_workers=8):
@@ -64,7 +75,7 @@ class BaseImgDataset(Dataset):
         
         label = torch.from_numpy(get_one_hot(self.labels[index], self.n_cls)).to(torch.float32)
         
-        img_np = cv2.imread(img_file)
+        img_np = read_image(img_file)
         if len(img_np.shape) < 3 or img_np.shape[2] == 1:
             img_np = img_np.squeeze()
             img_np = np.tile(img_np, (1,1,3))
@@ -109,7 +120,7 @@ class TestDataset(Dataset):
 
     def __getitem__(self, index):
         img_file = self.imgs[index]
-        img_np = cv2.imread(img_file)
+        img_np = read_image(img_file)
         if len(img_np.shape) < 3 or img_np.shape[2] == 1:
             img_np = img_np.squeeze()
             img_np = np.tile(img_np, (1,1,3))
@@ -144,7 +155,7 @@ if __name__ == '__main__':
         y, label, utt_id = train_dataset[i]
         y_np = y.cpu().numpy().transpose((1,2,0)) * 255
         y_np = y_np.astype(np.uint8)
-        cv2.imwrite(os.path.join(train_samples, os.path.basename(utt_id)), y_np)
+        write_image(os.path.join(train_samples, os.path.basename(utt_id)), y_np)
         print(label)
         print(y.max())
         print(y.min())
@@ -158,7 +169,7 @@ if __name__ == '__main__':
         y, label, utt_id = valid_dataset[i]
         y_np = y.cpu().numpy().transpose((1,2,0)) * 255
         y_np = y_np.astype(np.uint8)
-        cv2.imwrite(os.path.join(valid_samples, os.path.basename(utt_id)), y_np)
+        write_image(os.path.join(valid_samples, os.path.basename(utt_id)), y_np)
         print(label)
         print(y.max())
         print(y.min())
@@ -169,11 +180,10 @@ if __name__ == '__main__':
     test_samples = os.path.join(sample_dir, 'test')
     os.makedirs(test_samples, exist_ok=True)
     for i in np.random.randint(0, len(test_dataset), size=5):
-        y, label, utt_id = test_dataset[i]
+        y, utt_id = test_dataset[i]
         y_np = y.cpu().numpy().transpose((1,2,0)) * 255
         y_np = y_np.astype(np.uint8)
-        cv2.imwrite(os.path.join(test_samples, os.path.basename(utt_id)), y_np)
-        print(label)
+        write_image(os.path.join(test_samples, os.path.basename(utt_id)), y_np)
         print(y.max())
         print(y.min())
         print(utt_id)

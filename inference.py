@@ -3,7 +3,7 @@ import argparse
 
 import albumentations as A
 import numpy as np
-import cv2
+from PIL import Image
 import torch
 import torch.nn.functional as F
 from torchvision import transforms
@@ -53,7 +53,8 @@ class InferenceModel():
         self.model.load_state_dict(state_dict)
     
     def read_image(self, img_path):
-        return cv2.imread(img_path)
+        img_pil = Image.open(img_path).convert('RGB')
+        return np.array(img_pil)
 
     @torch.no_grad()
     def preprocess(self, img):

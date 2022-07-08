@@ -26,7 +26,7 @@ Requirements
 * Python3
 * torch
 * torchvision
-* opencv-python
+* Pillow
 * tqdm
 * numpy
 * albumentations
