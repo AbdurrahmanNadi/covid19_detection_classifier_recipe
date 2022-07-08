@@ -154,7 +154,7 @@ To start an experiment you should start by
 * Write the configuration file and configure the model parameters
 * run trainer.py
 
-All the configuration are specified above except for the model configuration part since it depends on the target model. 
+All the configuration are specified above except for the model configuration part since it depends on the target model.
 
 ### Model Configuration
 

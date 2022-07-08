@@ -18,7 +18,7 @@ dataset:
   img_size: 256
   crop_size: 224
   img_affixs: [png,jpg,jpeg]
-  use_CLAHE: False
+  use_CLAHE: True
   
 trainer:
   model_affix: CNN5x

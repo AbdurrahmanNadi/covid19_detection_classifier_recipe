@@ -8,7 +8,7 @@ dataset:
   img_size: 256
   crop_size: 224
   img_affixs: [png,jpg,jpeg]
-  use_CLAHE: True
+  use_CLAHE: False
   
 trainer:
   model_affix: resnet50
